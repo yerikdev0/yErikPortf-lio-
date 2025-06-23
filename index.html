@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfólio yErik</title>
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0a0a;
+    color: #eee;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  #container {
+    display: flex;
+    height: 100vh;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  section {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  section:nth-child(1) {
+    background: linear-gradient(135deg, #0ff 20%, #004d4d 80%);
+  }
+  section:nth-child(2) {
+    background: linear-gradient(135deg, #ff0055 20%, #660022 80%);
+  }
+  section:nth-child(3) {
+    background: linear-gradient(135deg, #ffaa00 20%, #664400 80%);
+  }
+  section:nth-child(4) {
+    background: linear-gradient(135deg, #0044ff 20%, #002266 80%);
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 12px rgba(255,255,255,0.6);
+  }
+
+  p {
+    max-width: 700px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #eee;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(0,0,0,0.8);
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    background: rgba(10,10,10,0.85);
+    padding: 1rem 0;
+    z-index: 10;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  nav button:hover,
+  nav button.active {
+    color: #0ff;
+  }
+
+  .content-anim {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .content-anim.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  #container::-webkit-scrollbar {
+    height: 8px;
+  }
+  #container::-webkit-scrollbar-track {
+    background: #111;
+  }
+  #container::-webkit-scrollbar-thumb {
+    background: #0ff;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 720px) {
+    h1 {
+      font-size: 2.2rem;
+    }
+    p {
+      font-size: 1rem;
+      padding: 0 1rem;
+    }
+    nav {
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Navegação principal">
+  <button data-section="0" class="active">INÍCIO</button>
+  <button data-section="1">SOBRE</button>
+  <button data-section="2">PROJETOS</button>
+  <button data-section="3">CONTATO</button>
+</nav>
+
+<div id="container" role="main">
+  <section id="home">
+    <h1 class="content-anim">☆SEJA BEM VINDO AO<br>PORTFÓLIO DO Erik!☆</h1>
+    <p class="content-anim">Explore este site para ficar por dentro do meu trabalho.</p>
+  </section>
+
+  <section id="sobre">
+    <h1 class="content-anim">Sobre Mim</h1>
+    <p class="content-anim">Sou programador com foco em Luau e HTML, criando tanto sistemas funcionais para jogos no Roblox Studio quanto interfaces modernas para sites. Tenho experiência com lógica de scripts, interfaces interativas e design limpo. Busco sempre otimizar a experiência do usuário, unindo criatividade e organização em cada projeto que desenvolvo.</p>
+  </section>
+
+  <section id="projetos">
+    <h1 class="content-anim">Projetos</h1>
+    <p class="content-anim">Aqui você verá alguns projetos que foi feito por mim, e caso tenha algum interesse, clique na opção de "Contato" ou arraste para o lado. 😉</p>
+  </section>
+
+  <section id="contato">
+    <h1 class="content-anim">Contato</h1>
+    <p class="content-anim">📩 Fala comigo no Discord!<br>Se curtiu meu trabalho ou quer trocar uma ideia, é só chamar:<br><strong>y_erik</strong><br>Sempre aberto a trabalhos, dúvidas ou só bater um papo mesmo. 😎</p>
+  </section>
+</div>
+
+<script>
+  const container = document.getElementById('container');
+  const buttons = document.querySelectorAll('nav button');
+  const sections = container.querySelectorAll('section');
+
+  function activateSection(index) {
+    buttons.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    container.scrollTo({
+      left: sections[index].offsetLeft,
+      behavior: 'smooth'
+    });
+  }
+
+  buttons.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      activateSection(i);
+    });
+  });
+
+  function onScroll() {
+    let scrollLeft = container.scrollLeft;
+    let width = container.clientWidth;
+
+    sections.forEach((section, i) => {
+      const sectionLeft = section.offsetLeft;
+      const sectionRight = sectionLeft + section.offsetWidth;
+      const contentElems = section.querySelectorAll('.content-anim');
+
+      if(scrollLeft + width/2 >= sectionLeft && scrollLeft + width/2 < sectionRight) {
+        buttons.forEach((btn, idx) => btn.classList.toggle('active', idx === i));
+        contentElems.forEach(elem => elem.classList.add('visible'));
+      } else {
+        contentElems.forEach(elem => elem.classList.remove('visible'));
+      }
+    });
+  }
+
+  container.addEventListener('scroll', onScroll);
+
+  window.addEventListener('load', () => {
+    activateSection(0);
+    onScroll();
+  });
+
+  container.addEventListener('keydown', e => {
+    if(e.key === 'ArrowRight') {
+      e.preventDefault();
+      let currentIndex = Array.from(buttons).findIndex(btn => btn.classList.contains('active'));
+      if(currentIndex < buttons.length -1) activateSection(currentIndex +1);
+    } else if(e.key === 'ArrowLeft') {
+      e.preventDefault();
+      let currentIndex = Array.from(buttons).findIndex(btn => btn.classList.contains('active'));
+      if(currentIndex > 0) activateSection(currentIndex -1);
+    }
+  });
+</script>
+
+</body>
+</html>
